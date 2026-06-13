@@ -1,0 +1,756 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --black: #0a0a0c;
+  --anthracite: #141720;
+  --surface: #12141a;
+  --red: #D90429;
+  --orange: #FF7D00;
+  --white: #efefef;
+  --muted: #616878;
+  --line: rgba(255, 255, 255, 0.06);
+}
+
+html {
+  scroll-behavior: auto;
+  scroll-snap-type: none;
+  overscroll-behavior: none;
+}
+
+body {
+  background: var(--black);
+  color: var(--white);
+  font-family: 'Montserrat', sans-serif;
+  overflow-x: hidden;
+  overscroll-behavior: none;
+}
+
+/* ── NAV ─────────────────────────────────────── */
+nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 200;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 52px;
+  background: linear-gradient(to bottom, rgba(10, 10, 12, 0.92) 60%, transparent);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.nav-brand {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 13px;
+  letter-spacing: 4px;
+  color: var(--red);
+  text-transform: uppercase;
+}
+
+.nav-progress {
+  width: 140px;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.nav-bar {
+  height: 100%;
+  background: var(--red);
+  width: 0;
+  transition: width 0.4s ease;
+}
+
+.nav-counter {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 13px;
+  letter-spacing: 3px;
+  color: rgba(239, 239, 239, 0.65);
+}
+
+/* ── GRID TEXTURE ───────────────────────────── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.012) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.012) 1px, transparent 1px);
+  background-size: 72px 72px;
+}
+
+/* ── SECTIONS ───────────────────────────────── */
+.section {
+  height: 100vh;
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 110px 80px 80px;
+  position: relative;
+  overflow: hidden;
+}
+
+.section-inner {
+  width: 100%;
+  max-width: 1100px;
+  position: relative;
+  z-index: 2;
+}
+
+/* ── AMBIENT BLOBS ──────────────────────────── */
+.blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(130px);
+  pointer-events: none;
+  opacity: 0;
+  will-change: opacity, transform;
+  transition: opacity 1.2s ease;
+}
+
+.blob.r {
+  background: var(--red);
+}
+
+.blob.o {
+  background: var(--orange);
+}
+
+.section.in-view .blob {
+  opacity: 0.13;
+}
+
+/* ── STAGGER REVEAL ─────────────────────────── */
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(36px);
+  transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+[data-reveal].on {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── TYPOGRAPHY ─────────────────────────────── */
+.eyebrow {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 13px;
+  letter-spacing: 4px;
+  color: var(--red);
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 22px;
+}
+
+.eyebrow::before {
+  content: '';
+  display: block;
+  width: 28px;
+  height: 1px;
+  background: var(--red);
+  flex-shrink: 0;
+}
+
+h1 {
+  font-family: 'Urbanist', sans-serif;
+  font-size: clamp(56px, 8vw, 108px);
+  font-weight: 900;
+  line-height: 0.92;
+  letter-spacing: -3px;
+  text-transform: uppercase;
+}
+
+h2 {
+  font-family: 'Urbanist', sans-serif;
+  font-size: clamp(38px, 5.5vw, 74px);
+  font-weight: 700;
+  line-height: 0.95;
+  letter-spacing: -2px;
+  text-transform: uppercase;
+}
+
+.body-text {
+  font-size: 17px;
+  line-height: 1.85;
+  color: rgba(239, 239, 239, 0.88);
+  max-width: 600px;
+  margin-top: 24px;
+}
+
+.cr {
+  color: var(--red);
+}
+
+.co {
+  color: var(--orange);
+}
+
+/* ── STAT GRID ──────────────────────────────── */
+.stat-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  margin-top: 52px;
+  border: 1px solid var(--line);
+  gap: 1px;
+  background: var(--line);
+}
+
+.stat-cell {
+  background: var(--surface);
+  padding: 32px 26px;
+}
+
+.stat-val {
+  font-family: 'Urbanist', sans-serif;
+  font-size: clamp(34px, 4vw, 54px);
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: -1.5px;
+}
+
+.stat-lbl {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 13px;
+  letter-spacing: 2px;
+  color: rgba(239, 239, 239, 0.7);
+  margin-top: 8px;
+  text-transform: uppercase;
+}
+
+/* ── FLIP CARDS (ADAPTATIVES) ─────────────────── */
+.flip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 48px;
+}
+
+.flip-card {
+  /* La largeur reste fixe ou fluide, mais la hauteur est dictée par le contenu */
+  width: 210px;
+  perspective: 900px;
+  cursor: pointer;
+}
+
+.flip-inner {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.65s cubic-bezier(0.23, 1, 0.32, 1);
+
+  /* ASTUCE : On utilise Grid pour superposer les faces sans absolute */
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
+}
+
+.flip-card:hover .flip-inner,
+.flip-card.open .flip-inner {
+  transform: rotateY(180deg);
+}
+
+.flip-f,
+.flip-b {
+  /* Remplacement de position: absolute par la superposition sur la grille */
+  grid-area: 1 / 1 / 2 / 2;
+  backface-visibility: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 18px;
+  border: 1px solid var(--line);
+
+  /* Sécurité anti-débordement si un mot est trop long */
+  overflow: hidden;
+  word-wrap: break-word;
+}
+
+.flip-f {
+  background: var(--anthracite);
+}
+
+.flip-f::after {
+  content: '↻';
+  position: absolute;
+  bottom: 9px;
+  right: 13px;
+  font-size: 15px;
+  color: var(--red);
+  opacity: 0.5;
+}
+
+.flip-b {
+  background: var(--red);
+  transform: rotateY(180deg);
+}
+
+.flip-tag {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 12px;
+  letter-spacing: 3px;
+  color: var(--orange);
+  margin-bottom: 7px;
+  text-transform: uppercase;
+}
+
+.flip-name {
+  font-family: 'Urbanist', sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+.flip-def {
+  font-size: 14px;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 1);
+}
+
+/* ── TIMELINE ───────────────────────────────── */
+.timeline {
+  margin-top: 48px;
+  padding-left: 28px;
+  position: relative;
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(to bottom, var(--red), var(--orange), transparent);
+}
+
+.tl-item {
+  position: relative;
+  margin-bottom: 28px;
+  padding-left: 22px;
+  opacity: 0;
+  transform: translateX(-18px);
+  transition: opacity 0.55s ease, transform 0.55s ease;
+}
+
+.tl-item.on {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.tl-item::before {
+  content: '';
+  position: absolute;
+  left: -34px;
+  top: 6px;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--red);
+  box-shadow: 0 0 10px rgba(217, 4, 41, 0.55);
+}
+
+.tl-phase {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 13px;
+  letter-spacing: 3px;
+  color: var(--orange);
+  margin-bottom: 5px;
+  text-transform: uppercase;
+}
+
+.tl-txt {
+  font-size: 16px;
+  color: rgba(239, 239, 239, 0.85);
+  line-height: 1.65;
+}
+
+/* ── COMPARE ────────────────────────────────── */
+.compare-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  margin-top: 48px;
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+}
+
+.compare-col {
+  background: var(--surface);
+  padding: 40px 34px;
+  position: relative;
+}
+
+.compare-col.hot {
+  background: linear-gradient(135deg, rgba(217, 4, 41, 0.1), var(--surface));
+}
+
+.compare-col.hot::after {
+  content: 'DANGER';
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 3px;
+  color: var(--red);
+  border: 1px solid rgba(217, 4, 41, 0.4);
+  padding: 3px 8px;
+}
+
+.compare-mtn {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 13px;
+  letter-spacing: 3px;
+  color: rgba(239, 239, 239, 0.7);
+  margin-bottom: 14px;
+}
+
+.compare-pct {
+  font-family: 'Urbanist', sans-serif;
+  font-size: 68px;
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: -2px;
+}
+
+.bar-track {
+  height: 5px;
+  background: rgba(255, 255, 255, 0.07);
+  margin-top: 18px;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.bar-fill {
+  height: 100%;
+  border-radius: 3px;
+  width: 0;
+  transition: width 1.6s cubic-bezier(0.23, 1, 0.32, 1) 0.3s;
+}
+
+/* ── PILLARS ────────────────────────────────── */
+.pillar-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  margin-top: 48px;
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+}
+
+.pillar {
+  background: var(--surface);
+  padding: 34px 26px;
+  position: relative;
+  overflow: hidden;
+}
+
+.pillar::after {
+  content: attr(data-n);
+  position: absolute;
+  bottom: -24px;
+  right: -8px;
+  font-family: 'Urbanist', sans-serif;
+  font-size: 110px;
+  font-weight: 900;
+  color: rgba(255, 255, 255, 0.025);
+  line-height: 1;
+  pointer-events: none;
+}
+
+.pillar-head {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 13px;
+  letter-spacing: 3px;
+  color: var(--orange);
+  margin-bottom: 10px;
+  text-transform: uppercase;
+}
+
+.pillar h3 {
+  font-family: 'Urbanist', sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.pillar p {
+  font-size: 15px;
+  color: rgba(239, 239, 239, 0.78);
+  margin-top: 8px;
+  line-height: 1.65;
+}
+
+/* ── FORMULA ────────────────────────────────── */
+.formula-box {
+  background: var(--anthracite);
+  border: 1px solid rgba(217, 4, 41, 0.25);
+  border-left: 3px solid var(--red);
+  padding: 26px 30px;
+  margin-top: 30px;
+  /* On garde la police mono par défaut pour la boîte (étiquette et légende) */
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 16px;
+  line-height: 1.5;
+  letter-spacing: 0.5px;
+}
+
+.formula-label {
+  font-size: 12px;
+  letter-spacing: 4px;
+  color: var(--red);
+  margin-bottom: 12px;
+  text-transform: uppercase;
+}
+
+/* Nouvelle classe pour la formule mathématique épurée */
+.formula-math {
+  font-family: 'Urbanist', sans-serif;
+  /* Style moderne et ultra lisible */
+  font-size: 24px;
+  font-weight: 300;
+  color: #ffffff;
+  letter-spacing: 1px;
+  margin: 20px 0;
+  /* Crée un bel espace respirable autour de la formule */
+  line-height: 1.2;
+}
+
+/* Style optionnel pour faire ressortir les indices (wc) et exposants (0.16) */
+.formula-math sub,
+.formula-math sup {
+  color: var(--orange);
+  /* Changez par var(--red) ou une autre couleur si nécessaire */
+  font-weight: 600;
+}
+
+/* ── DANGER LIST ────────────────────────────── */
+.danger-list {
+  margin-top: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.danger-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 16px 18px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--red);
+}
+
+.danger-icon {
+  font-size: 18px;
+  flex-shrink: 0;
+  line-height: 1.5;
+}
+
+.danger-item h3 {
+  font-size: 17px;
+  font-family: 'Urbanist', sans-serif;
+  font-weight: 700;
+  margin-bottom: 3px;
+}
+
+.danger-item p {
+  font-size: 15px;
+  color: rgba(239, 239, 239, 0.78);
+  line-height: 1.6;
+}
+
+/* ── QUOTE ──────────────────────────────────── */
+.quote-wrap {
+  text-align: center;
+  padding: 48px 0;
+  max-width: 860px;
+  margin: 0 auto;
+}
+
+.quote-mark {
+  font-family: 'Urbanist', sans-serif;
+  font-size: 160px;
+  font-weight: 900;
+  color: var(--red);
+  opacity: 0.18;
+  line-height: 0.5;
+  display: block;
+  margin-bottom: 36px;
+}
+
+.quote-text {
+  font-family: 'Urbanist', sans-serif;
+  font-size: clamp(22px, 3vw, 32px);
+  font-weight: 300;
+  line-height: 1.45;
+  letter-spacing: -0.3px;
+}
+
+.quote-text em {
+  font-style: normal;
+  color: var(--orange);
+  font-weight: 700;
+}
+
+/* ── FINAL ──────────────────────────────────── */
+.merci {
+  font-family: 'Urbanist', sans-serif;
+  font-size: clamp(64px, 12vw, 148px);
+  font-weight: 900;
+  letter-spacing: -5px;
+  line-height: 0.88;
+  text-transform: uppercase;
+  background: linear-gradient(140deg, var(--white) 30%, var(--red) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.questions-line {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 15px;
+  letter-spacing: 5px;
+  color: rgba(239, 239, 239, 0.7);
+  text-transform: uppercase;
+  margin-top: 22px;
+}
+
+/* ── SCROLL INDICATOR ───────────────────────── */
+.scroll-hint {
+  position: absolute;
+  bottom: 36px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  opacity: 0.35;
+  z-index: 10;
+  animation: bounce 2.2s ease-in-out infinite;
+}
+
+.scroll-hint span {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 3px;
+  color: var(--muted);
+}
+
+.scroll-arrow {
+  width: 1px;
+  height: 36px;
+  background: linear-gradient(to bottom, transparent, var(--muted));
+}
+
+@keyframes bounce {
+
+  0%,
+  100% {
+    transform: translateX(-50%) translateY(0);
+  }
+
+  50% {
+    transform: translateX(-50%) translateY(6px);
+  }
+}
+
+/* ── RESPONSIVE ─────────────────────────────── */
+@media (max-width: 768px) {
+  .section {
+    padding: 80px 24px 60px;
+  }
+
+  nav {
+    padding: 16px 24px;
+  }
+
+  .compare-grid,
+  .pillar-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .flip-card {
+    width: 155px;
+    height: 115px;
+  }
+
+  .stat-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .nav-progress {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+.logistique-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 40px;
+}
+
+.logistique-text {
+  flex: 12;
+  max-width: 600px;
+}
+
+.logistique-img-container {
+  flex: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logistique-img-container img {
+  width: 100%;
+  height: auto;
+  display: block;
+  max-width: 100%;
+}
+
+
+@media (max-width: 991.98px) {
+  .logistique-container {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .logistique-text,
+  .logistique-img-container {
+    max-width: none;
+  }
+}
